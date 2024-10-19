@@ -1,5 +1,8 @@
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    mySprite.vy = 0
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
-    mySprite.vy = -150
+    mySprite.vy = -50
 })
 let mySprite: Sprite = null
 mySprite = sprites.create(img`
@@ -20,27 +23,14 @@ mySprite = sprites.create(img`
     . 2 2 2 2 . . . 2 2 2 2 . . . . 
     2 2 2 2 2 . . . 2 2 2 2 2 . . . 
     `, SpriteKind.Player)
-let cloudSprite = sprites.create(img`
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    . . . . . . . . . . . . . . . . 
-    `, SpriteKind.Player)
-controller.moveSprite(mySprite)
+tiles.placeOnTile(mySprite, tiles.getTileLocation(0, 17))
+controller.moveSprite(mySprite, 100, 0)
 mySprite.vy = 100
 tiles.setCurrentTilemap(tilemap`level`)
 tiles.setTileAt(tiles.getTileLocation(0, 14), assets.tile`myTile`)
 tiles.setTileAt(tiles.getTileLocation(0, 15), assets.tile`myTile`)
 tiles.setTileAt(tiles.getTileLocation(1, 14), assets.tile`myTile`)
+scene.cameraFollowSprite(mySprite)
+forever(function () {
+    mySprite.y += 2
+})
